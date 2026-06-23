@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>FOSS4G Hiroshima — Spot Map</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <!-- Top bar: title, search, filter chips -->
+  <header id="topbar">
+    <div class="title-row">
+      <span class="app-title">🗺️ FOSS4G Hiroshima Spots</span>
+    </div>
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search spots, tags, people…" autocomplete="off" />
+    </div>
+    <div id="category-chips" class="chip-row"></div>
+    <div id="subcategory-chips" class="chip-row sub" hidden></div>
+  </header>
+
+  <div id="map"></div>
+
+  <button id="fab" class="fab" type="button">＋ Recommend a spot</button>
+
+  <div id="legend" class="legend">
+    <span><i class="lg-pin"></i> Recommendations</span>
+    <span><i class="lg-dot"></i> Places · tap to add</span>
+  </div>
+
+  <!-- Banner shown while picking a location on the map -->
+  <div id="pick-banner" class="pick-banner" hidden>
+    Tap a place marker, or anywhere on the map, to choose a location.
+    <button id="pick-cancel" type="button">Cancel</button>
+  </div>
+
+  <!-- Detail bottom sheet -->
+  <div id="detail" class="sheet" hidden>
+    <button id="detail-close" class="sheet-close" type="button">✕</button>
+    <div id="detail-body"></div>
+  </div>
+
+  <!-- Post modal -->
+  <div id="post-modal" class="modal" hidden>
+    <div class="modal-card">
+      <header class="modal-head">
+        <h2>Recommend a spot</h2>
+        <button id="post-close" class="icon-btn" type="button">✕</button>
+      </header>
+
+      <!-- Step 1: find the place -->
+      <section id="step-find">
+        <label class="step-label">1 · Find the place</label>
+        <input id="poi-search" type="search" placeholder="Search nearby places…" autocomplete="off" />
+        <ul id="poi-results" class="poi-results"></ul>
+        <div class="find-actions">
+          <button id="pick-on-map" type="button" class="ghost">📍 Pick on map</button>
+          <button id="use-location" type="button" class="ghost">🧭 Use my location</button>
+        </div>
+      </section>
+
+      <!-- Step 2: selected place + recommendation details -->
+      <section id="step-details" hidden>
+        <div class="selected-place">
+          <div class="sel-head">Selected place</div>
+          <label class="field">Place name
+            <input id="f-spotname" maxlength="120" required />
+          </label>
+          <div class="sel-coords" id="sel-coords"></div>
+          <button id="change-place" type="button" class="link-btn">← Change place</button>
+        </div>
+
+        <form id="post-form">
+          <label class="step-label">2 · Your recommendation</label>
+          <label class="field">Your name
+            <input id="f-author" maxlength="40" required placeholder="e.g. Alex" />
+          </label>
+          <label class="field">Category
+            <select id="f-category"></select>
+          </label>
+          <label class="field" id="subcat-wrap">Subcategory
+            <select id="f-subcategory"></select>
+          </label>
+          <label class="field">Tags (comma separated)
+            <input id="f-tags" maxlength="160" placeholder="ramen, cozy, cheap" />
+          </label>
+          <label class="field">Comment
+            <textarea id="f-comment" maxlength="1000" rows="3" placeholder="Why do you recommend it?"></textarea>
+          </label>
+          <button type="submit" class="primary">Post recommendation</button>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
