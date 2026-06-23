@@ -1,7 +1,7 @@
 """Fetch POIs from OpenStreetMap (Overpass API) into the `pois` table.
 
 Run as a CLI:
-    uv run python -m app.poi                 # use venue/radius from config
+    uv run python -m app.poi                 # use area center/radius from config
     uv run python -m app.poi --radius 2000
     uv run python -m app.poi --lat 34.39 --lng 132.46 --radius 1500
 

@@ -1,4 +1,4 @@
-"""Configuration: venue, POI fetch area, map defaults, category taxonomy.
+"""Configuration: POI fetch area, map defaults, category taxonomy.
 
 Everything an organizer is likely to tweak for their own event lives here.
 """

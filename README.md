@@ -14,6 +14,7 @@ illustrated guide to famous places), built on open data.
 
 | Category | Subcategories |
 |---|---|
+| 🏛️ Conference venue | — |
 | 🍽️ Food & Drink | Lunch · Dinner · Drinks · Sweets |
 | ⛩️ Sightseeing | — |
 | 📍 Other | — |
@@ -28,7 +29,7 @@ illustrated guide to famous places), built on open data.
 cd foss4g_meisyo_zue
 
 # 1. Fetch nearby POIs from OpenStreetMap into the local DB
-#    (uses the venue/radius in app/config.py; falls back to a small
+#    (uses the area center/radius in app/config.py; falls back to a small
 #     bundled sample if Overpass is unreachable)
 uv run python -m app.poi
 
@@ -68,8 +69,8 @@ filter by it.
 
 Edit [`app/config.py`](app/config.py):
 
-- `VENUE_LAT` / `VENUE_LNG` / `POI_RADIUS_M` — where and how wide to pull POIs.
-  Re-run `uv run python -m app.poi` afterwards.
+- `AREA_CENTER_LAT` / `AREA_CENTER_LNG` / `POI_RADIUS_M` — where and how wide to
+  pull POIs. Re-run `uv run python -m app.poi` afterwards.
 - `MAP_CENTER` / `MAP_ZOOM` — the map's initial view.
 - `CATEGORIES` — category names, colors, emoji and subcategories.
 
@@ -77,7 +78,7 @@ Edit [`app/config.py`](app/config.py):
 
 ```
 app/
-  config.py      venue, map defaults, category taxonomy
+  config.py      POI area center, map defaults, category taxonomy
   db.py          SQLite schema + connection
   models.py      Pydantic models + validation
   repository.py  CRUD / search for pois & posts
