@@ -3,16 +3,16 @@
 Everything an organizer is likely to tweak for their own event lives here.
 """
 
-# --- Venue / POI fetch area -------------------------------------------------
+# --- POI fetch area ---------------------------------------------------------
 # Default: central Hiroshima (Kamiyacho / Hatchobori downtown area).
-# Change these to your actual venue, then re-run `python -m app.poi`.
-VENUE_LAT = 34.3917
-VENUE_LNG = 132.4595
-# Radius (meters) around the venue to pull POIs from OpenStreetMap.
+# Change these to your actual event area, then re-run `python -m app.poi`.
+AREA_CENTER_LAT = 34.3917
+AREA_CENTER_LNG = 132.4595
+# Radius (meters) around the area center to pull POIs from OpenStreetMap.
 POI_RADIUS_M = 1500
 
 # --- Map defaults (sent to the frontend via /api/meta) ----------------------
-MAP_CENTER = [VENUE_LAT, VENUE_LNG]
+MAP_CENTER = [AREA_CENTER_LAT, AREA_CENTER_LNG]
 MAP_ZOOM = 15
 
 # --- Category taxonomy ------------------------------------------------------

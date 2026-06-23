@@ -135,8 +135,8 @@ _SAMPLE_POIS = [
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch OSM POIs into the local DB.")
-    parser.add_argument("--lat", type=float, default=config.VENUE_LAT)
-    parser.add_argument("--lng", type=float, default=config.VENUE_LNG)
+    parser.add_argument("--lat", type=float, default=config.AREA_CENTER_LAT)
+    parser.add_argument("--lng", type=float, default=config.AREA_CENTER_LNG)
     parser.add_argument("--radius", type=int, default=config.POI_RADIUS_M)
     args = parser.parse_args()
 
