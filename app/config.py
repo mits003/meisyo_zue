@@ -19,6 +19,11 @@ MAP_ZOOM = 15
 # Top-level categories drive marker colors and the filter chips.
 # Subcategories are optional; only Food & Drink defines them.
 CATEGORIES = {
+    "Conference venue": {
+        "color": "#1098ad",
+        "emoji": "🏛",
+        "subcategories": [],
+    },
     "Food & Drink": {
         "color": "#e8590c",
         "emoji": "🍽",
