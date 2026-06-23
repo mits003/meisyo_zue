@@ -1,0 +1,15 @@
+[project]
+name = "foss4g-meisyo-zue"
+version = "0.1.0"
+description = "FOSS4G Hiroshima participant spot recommendation map"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "httpx>=0.27",
+]
+
+# No [build-system] on purpose: uv treats this as a non-packaged ("virtual")
+# project, so dependencies are installed into the venv but the project itself
+# is not built/installed. Run from the project root so `app` is importable.
