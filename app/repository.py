@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from .db import get_connection
+from .db import connect
 
 
 # --- tags helpers -----------------------------------------------------------
@@ -50,18 +50,14 @@ def list_posts(
         params.extend([like, like, like, like])
     sql += " ORDER BY created_at DESC, id DESC"
 
-    conn = get_connection()
-    try:
+    with connect() as conn:
         rows = conn.execute(sql, params).fetchall()
-    finally:
-        conn.close()
     return [_row_to_post(r) for r in rows]
 
 
 def create_post(data: dict) -> dict:
     created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    conn = get_connection()
-    try:
+    with connect() as conn:
         cur = conn.execute(
             """
             INSERT INTO posts
@@ -85,17 +81,12 @@ def create_post(data: dict) -> dict:
         conn.commit()
         new_id = cur.lastrowid
         row = conn.execute("SELECT * FROM posts WHERE id = ?", (new_id,)).fetchone()
-    finally:
-        conn.close()
     return _row_to_post(row)
 
 
 def get_post(post_id: int) -> dict | None:
-    conn = get_connection()
-    try:
+    with connect() as conn:
         row = conn.execute("SELECT * FROM posts WHERE id = ?", (post_id,)).fetchone()
-    finally:
-        conn.close()
     return _row_to_post(row) if row else None
 
 
@@ -116,26 +107,19 @@ def list_pois(q: str | None = None, bbox: str | None = None, limit: int = 200) -
     sql += " ORDER BY name LIMIT ?"
     params.append(limit)
 
-    conn = get_connection()
-    try:
+    with connect() as conn:
         rows = conn.execute(sql, params).fetchall()
-    finally:
-        conn.close()
     return [dict(r) for r in rows]
 
 
 def count_pois() -> int:
-    conn = get_connection()
-    try:
+    with connect() as conn:
         return conn.execute("SELECT COUNT(*) FROM pois").fetchone()[0]
-    finally:
-        conn.close()
 
 
 def upsert_pois(items: list[dict]) -> int:
     """Insert or update POIs keyed by (osm_type, osm_id). Returns count written."""
-    conn = get_connection()
-    try:
+    with connect() as conn:
         conn.executemany(
             """
             INSERT INTO pois (osm_type, osm_id, name, lat, lng, category,
@@ -153,6 +137,4 @@ def upsert_pois(items: list[dict]) -> int:
             items,
         )
         conn.commit()
-    finally:
-        conn.close()
     return len(items)

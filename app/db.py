@@ -1,6 +1,8 @@
 """SQLite storage: connection helper and schema initialization."""
 
 import sqlite3
+from collections.abc import Iterator
+from contextlib import contextmanager
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -48,11 +50,18 @@ def get_connection() -> sqlite3.Connection:
     return conn
 
 
-def init_db() -> None:
-    """Create tables if they do not exist. Safe to call repeatedly."""
+@contextmanager
+def connect() -> Iterator[sqlite3.Connection]:
+    """Yield a connection and always close it when the block exits."""
     conn = get_connection()
     try:
-        conn.executescript(SCHEMA)
-        conn.commit()
+        yield conn
     finally:
         conn.close()
+
+
+def init_db() -> None:
+    """Create tables if they do not exist. Safe to call repeatedly."""
+    with connect() as conn:
+        conn.executescript(SCHEMA)
+        conn.commit()
